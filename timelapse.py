@@ -21,7 +21,7 @@ for sub_folder in sorted(os.listdir(FOLDER))[0:-1]: # All except last (so we don
     print(cmd)
     os.system(cmd)
     if ARCHIVE == "":
-        os.remove(FOLDER+"/"+sub_folder+"/")
+        os.removedirs(FOLDER+"/"+sub_folder+"/")
         continue
     try:
         shutil.move(FOLDER+"/"+sub_folder+"/", ARCHIVE)
