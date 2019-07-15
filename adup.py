@@ -1,3 +1,5 @@
+# Duplicates files 5 times ech into symlinks in  a tmp
+
 import os, tempfile, signal
 
 def dup_folder(path):
