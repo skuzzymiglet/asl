@@ -6,7 +6,7 @@ import adup
 FOLDER = os.path.expanduser("~")+"/asl-scrots"
 SUMMARIES = os.path.expanduser("~")+"/asl-summaries"
 #ARCHIVE = "/media/skuzzyneon/Shared2/scrot_archive/"
-ARCHIVE = "/dev/null"
+ARCHIVE = ""
 FRAMERATE = 6
 SMOOTH = True
 
@@ -20,6 +20,9 @@ for sub_folder in sorted(os.listdir(FOLDER))[0:-1]: # All except last (so we don
         cmd = "ffmpeg -y -threads 2 -r {} -pattern_type glob -i '{}*.jpg' -c:v libvpx-vp9 -b:v 2M -auto-alt-ref 0 -s {}x{} -an  -deinterlace {}".format(FRAMERATE, FOLDER+"/"+sub_folder+"/", res[0], res[1], SUMMARIES+"/"+sub_folder+".webm")  
     print(cmd)
     os.system(cmd)
+    if ARCHIVE == "":
+        os.remove(FOLDER+"/"+sub_folder+"/")
+        continue
     try:
         shutil.move(FOLDER+"/"+sub_folder+"/", ARCHIVE)
         print("Moved", sub_folder, "to", ARCHIVE)
