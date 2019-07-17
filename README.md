@@ -9,8 +9,9 @@ asl is a resource-inexpensive way to record your screen. It takes screenshots at
 
 + Configuration in .ini format
 + Install scripts
-+ PyPI
++ Make it availablon on the PyPI
 + Cross platform - using ffmpeg bindings rather than `os.system()`
++ PEP compliance, SLOC limit (for contributors)
 + Automatic archive zipping 
 + Timelapse from archive
 + Modularization
