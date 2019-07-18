@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import os, getpass, shutil, psutil
+import os, shutil
 import adup
 
 FOLDER = os.path.expanduser("~")+"/asl-scrots"
