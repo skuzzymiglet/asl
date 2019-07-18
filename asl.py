@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import pyscreenshot, time, os
+
+name = "asl"
 INTERVAL = 15
 NEWFOLDER_THRESHOLD = 120
 HOME = os.path.expanduser("~")
