@@ -51,22 +51,17 @@ def latest_file(dir):
     except IndexError:
         return ""
 
-if latest_folder() == "":
-    os.mkdir(FOLDER+"asl-0000")
+def main():
+    if latest_folder() == "":
+        os.mkdir(FOLDER+"asl-0000")
 
-while True:
-    time.sleep(INTERVAL)
-    timestamp = int(time.time())
-    if (not (latest_file(FOLDER+latest_folder()) == "")) and (timestamp - int(latest_file(FOLDER+latest_folder()).split("-")[1].split(".")[0])) >= (NEWFOLDER_THRESHOLD):
-        new_folder = FOLDER+get_new_subfolder()
-        os.mkdir(new_folder)
-    else:
-        print(FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg")
-        take_screenshot(FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg")
-
-
-    
-
-
-
+    while True:
+        time.sleep(INTERVAL)
+        timestamp = int(time.time())
+        if (not (latest_file(FOLDER+latest_folder()) == "")) and (timestamp - int(latest_file(FOLDER+latest_folder()).split("-")[1].split(".")[0])) >= (NEWFOLDER_THRESHOLD):
+            new_folder = FOLDER+get_new_subfolder()
+            os.mkdir(new_folder)
+        else:
+            print(FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg")
+            take_screenshot(FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg")
 
