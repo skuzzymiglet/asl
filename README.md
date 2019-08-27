@@ -11,9 +11,9 @@ Run `asl` at bootup, with a cronjob, Autostart, etc. It will take screenshots at
 
 ### Todo
 
- - [X] Install scripts
+ - [+] Install scripts
  - [ ] Configuration in .ini format
- - [X] Make it available on the PyPI
+ - [+] Make it available on the PyPI
  - [ ] Cross platform - using ffmpeg bindings rather than `os.system()`
  - [ ] Tests, i.e. example pictures
  - [ ] PEP compliance, SLOC limit (for contributors)
