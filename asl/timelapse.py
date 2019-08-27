@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os, shutil, tempfile
+from PIL import Image
 
 FOLDER = os.path.expanduser("~")+"/asl-scrots"
 SUMMARIES = os.path.expanduser("~")+"/asl-summaries"
@@ -15,9 +16,15 @@ def dup_folder(path):
             os.symlink(path+i, tmp.name+"/"+i.split(".")[0]+str(n)+"."+i.split(".")[1])
     return tmp
 
+def folder_max_res(folder):
+    res = []
+    for f in os.listdir(folder):
+        res.append(Image.open(folder+f).size)
+    return max(res)
+
 def main():
     for sub_folder in sorted(os.listdir(FOLDER))[0:-1]: # All except last (so we dont go back to asl-0000)    
-        res = (2560, 1440)
+        res = folder_max_res(FOLDER+"/"+sub_folder+"/")
         if SMOOTH:
             tmp = dup_folder(FOLDER+"/"+sub_folder+"/")
             cmd = "ffmpeg -y -threads 2 -r {} -pattern_type glob -i '{}*.jpg' -c:v libvpx-vp9 -b:v 2M -auto-alt-ref 0 -s {}x{} -an  -deinterlace {}".format(30, tmp.name+"/", res[0], res[1], SUMMARIES+"/"+sub_folder+".webm")   
