@@ -1,6 +1,6 @@
-import setuptools
+import setuptools, os
 
-long_description = open("README.md", "r").read()
+long_description = open(os.path.join(os.path.dirname(__file__), "README.md"), "r").read()
 
 setuptools.setup(
     name="asl-screenlapse",
