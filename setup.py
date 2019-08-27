@@ -11,7 +11,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/skuzzymiglet/asl",
-    packages=setuptools.find_packages(),
+    packages=["asl"],
     setup_requires=["pyscreenshot"],
     classifiers=[
         "Programming Language :: Python :: 3",
