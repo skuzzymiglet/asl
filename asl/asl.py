@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import pyscreenshot, time, os
+import pyscreenshot
+import time
+import os
 
 name = "asl"
 INTERVAL = 15
@@ -11,9 +13,11 @@ FOLDER = HOME+"/asl-scrots/"
 if not os.path.isdir(FOLDER):
     os.makedirs(FOLDER)
 
+
 def take_screenshot(file):
     img = pyscreenshot.grab()
     img.save(file)
+
 
 def get_new_subfolder():
     latest = latest_folder()
@@ -22,6 +26,7 @@ def get_new_subfolder():
     number += 1
     new = "asl-{}".format(str(number).zfill(4))
     return new
+
 
 def latest_folder():
     asl_dirs = []
@@ -34,11 +39,14 @@ def latest_folder():
     except IndexError:
         return ""
 
+
 def ls_folders():
     return [f for f in os.listdir(FOLDER) if os.path.isdir(FOLDER+f)]
 
+
 def ls_files(dir):
     return [f for f in os.listdir(dir) if os.path.isfile(dir+"/"+f)]
+
 
 def latest_file(dir):
     asl_files = []
@@ -50,6 +58,7 @@ def latest_file(dir):
         return asl_files[-1]
     except IndexError:
         return ""
+
 
 def main():
     if latest_folder() == "":
@@ -64,4 +73,3 @@ def main():
         else:
             print(FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg")
             take_screenshot(FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg")
-
