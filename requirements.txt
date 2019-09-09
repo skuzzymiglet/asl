@@ -1,0 +1,2 @@
+pyscreenshot
+pillow
