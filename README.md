@@ -9,6 +9,13 @@ asl is a resource-inexpensive way to create timelapses from your screen. It take
 
 Run `asl` at bootup, with a cronjob, Autostart, etc. It will take screenshots at intervals, but if more than a certaing time is between them (i.e. different session), asl will create a new numbered folder. Whenever you want, run `asl-timelapse` to create timelapses.
 
+
+### Example output
+
+![example](asl-example.gif)
+
+See also `asl-example.webm`
+
 ### Todo
 
  - [X] Install scripts
