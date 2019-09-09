@@ -1,4 +1,5 @@
-import setuptools, os
+import setuptools
+import os
 
 long_description = open(os.path.join(os.path.dirname(__file__), "README.md"), "r").read()
 
