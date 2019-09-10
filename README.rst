@@ -19,6 +19,15 @@ screenshots at intervals, but if more than a certaing time is between
 them (i.e. different session), asl will create a new numbered folder.
 Whenever you want, run ``asl-timelapse`` to create timelapses.
 
+Example output
+~~~~~~~~~~~~~~
+
+.. figure:: asl-example.gif
+   :alt: example
+
+   example
+See also ``asl-example.webm``
+
 Todo
 ~~~~
 
