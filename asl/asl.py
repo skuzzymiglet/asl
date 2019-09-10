@@ -67,9 +67,17 @@ def main():
     while True:
         time.sleep(INTERVAL)
         timestamp = int(time.time())
-        if (not (latest_file(FOLDER+latest_folder()) == "")) and (timestamp - int(latest_file(FOLDER+latest_folder()).split("-")[1].split(".")[0])) >= (NEWFOLDER_THRESHOLD):
-            new_folder = FOLDER+get_new_subfolder()
-            os.mkdir(new_folder)
+        folders_exist = not (latest_file(FOLDER+latest_folder()) == "")
+        if folders_exist:
+            latest_filename = latest_file(FOLDER+latest_folder())
+            latest_filename_number_ext = latest_filename.split("-")[1]
+            latest_filename_number = latest_filename_number_ext.split(".")[0]
+            latest_filename_number = int(latest_filename_number)
+            time_since_latest_filename = timestamp - latest_filename_number
+            if time_since_latest_filename >= NEWFOLDER_THRESHOLD:
+                new_folder = FOLDER+get_new_subfolder()
+                os.mkdir(new_folder)
         else:
-            print(FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg")
-            take_screenshot(FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg")
+            name = FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg"
+            print(name)
+            take_screenshot(name)
