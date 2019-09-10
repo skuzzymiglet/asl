@@ -7,18 +7,26 @@ asl is a resource-inexpensive way to create timelapses from your screen. It take
 
 ### Installation
 
-
+Just `pip install asl_screenlapse`
 
 ### How to use
 
-Run `asl` at bootup, with a cronjob, Autostart, etc. It will take screenshots at intervals, but if more than a certaing time is between them (i.e. different session), asl will create a new numbered folder. Whenever you want, run `asl-timelapse` to create timelapses.
+Daemonization is flexible. Run `asl` at bootup, with DE Autostart, WM config, systemd service, etc. It will take screenshots in `$HOME/asl-scrots` at intervals, but if more than a certain time passes between them (i.e. different boot), it will create a new numbered folder. 
 
+Whenever you want, run `asl-timelapse` to create timelapses in `$HOME/asl-summaries`, named according to folder number and in the WEBM format.
 
 ### Example output
 
 ![example](asl-example.gif)
 
 See also `asl-example.webm`
+
+### Quirks
+
++ The non-`pip` dependency of `ffmpeg`, with no way to specify it in `setup.py`
++ The usage of `os.system()`
++ The `ffmpeg` command being written for Linux, so it doesn't work on Windows
+
 
 ### Todo
 
