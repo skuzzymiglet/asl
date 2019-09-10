@@ -28,7 +28,7 @@ def folder_max_res(folder):
 
 
 def main():
-    for sub_folder in sorted(os.listdir(FOLDER))[0:-1]:  # All except last (so we dont go back to asl-0000)    
+    for sub_folder in sorted(os.listdir(FOLDER))[0:-1]:  # All except last (so we dont go back to asl-0000)
         res = folder_max_res(FOLDER+"/"+sub_folder+"/")
         if SMOOTH:
             tmp = dup_folder(FOLDER+"/"+sub_folder+"/")
