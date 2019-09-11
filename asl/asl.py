@@ -45,11 +45,7 @@ def ls_files(d):
 
 
 def latest_file(d):
-    asl_files = []
-    for f in ls_files(d):
-        if "screenshot-" in f:
-            asl_files.append(f)
-    asl_files = sorted(asl_files)
+    asl_files = sorted([f for f in ls_files(d) if "screenshot-" in f])
     try:
         return asl_files[-1]
     except IndexError:
