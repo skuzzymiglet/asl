@@ -29,11 +29,7 @@ def get_new_subfolder():
 
 
 def latest_folder():
-    asl_dirs = []
-    for d in ls_folders():
-        if "asl-" in d:
-            asl_dirs.append(d)
-    asl_dirs = sorted(asl_dirs)
+    asl_dirs = sorted([d for d in ls_folders() if "asl-" in d])
     try:
         return asl_dirs[-1]
     except IndexError:
