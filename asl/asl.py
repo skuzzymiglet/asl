@@ -14,9 +14,9 @@ if not os.path.isdir(FOLDER):
     os.makedirs(FOLDER)
 
 
-def take_screenshot(file):
+def take_screenshot(f):
     img = pyscreenshot.grab()
-    img.save(file)
+    img.save(f)
 
 
 def get_new_subfolder():
