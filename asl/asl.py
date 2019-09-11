@@ -30,9 +30,9 @@ def get_new_subfolder():
 
 def latest_folder():
     asl_dirs = []
-    for dir in ls_folders():
-        if "asl-" in dir:
-            asl_dirs.append(dir)
+    for d in ls_folders():
+        if "asl-" in d:
+            asl_dirs.append(d)
     asl_dirs = sorted(asl_dirs)
     try:
         return asl_dirs[-1]
@@ -44,13 +44,13 @@ def ls_folders():
     return [f for f in os.listdir(FOLDER) if os.path.isdir(FOLDER+f)]
 
 
-def ls_files(dir):
-    return [f for f in os.listdir(dir) if os.path.isfile(dir+"/"+f)]
+def ls_files(d):
+    return [f for f in os.listdir(d) if os.path.isfile(d+"/"+f)]
 
 
-def latest_file(dir):
+def latest_file(d):
     asl_files = []
-    for file in ls_files(dir):
+    for file in ls_files(d):
         if "screenshot-" in file:
             asl_files.append(file)
     asl_files = sorted(asl_files)
