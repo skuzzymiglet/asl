@@ -62,8 +62,7 @@ def main():
         if folders_exist and (timestamp - int(latest_file(FOLDER+latest_folder()).split("-")[1].split(".")[0])) >= NEWFOLDER_THRESHOLD:
             new_folder = FOLDER+get_new_subfolder()
             os.mkdir(new_folder)
-        else:
-            name = FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg"
-            print(name)
-            take_screenshot(name)
+        name = FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg"
+        print(name)
+        take_screenshot(name)
         time.sleep(INTERVAL)
