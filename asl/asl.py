@@ -65,7 +65,6 @@ def main():
         os.mkdir(FOLDER+"asl-0000")
 
     while True:
-        time.sleep(INTERVAL)
         timestamp = int(time.time())
         folders_exist = not (latest_file(FOLDER+latest_folder()) == "")
         if folders_exist and (timestamp - int(latest_file(FOLDER+latest_folder()).split("-")[1].split(".")[0])) >= NEWFOLDER_THRESHOLD:
@@ -75,3 +74,4 @@ def main():
             name = FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg"
             print(name)
             take_screenshot(name)
+        time.sleep(INTERVAL)
