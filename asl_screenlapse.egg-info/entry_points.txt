@@ -1,0 +1,4 @@
+[console_scripts]
+asl = asl.asl:main
+asl-timelapse = asl.timelapse:main
+

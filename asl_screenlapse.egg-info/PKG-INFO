@@ -1,0 +1,53 @@
+Metadata-Version: 2.1
+Name: asl-screenlapse
+Version: 0.1.1
+Summary: a resource-inexpensive way to create timelapses from your screen
+Home-page: https://github.com/skuzzymiglet/asl
+Author: skuzzymiglet
+Author-email: skuzzymiglet@gmail.com
+License: UNKNOWN
+Description: # asl
+        ## The Auto Screen-lapse Tool
+        
+        ### Introduction
+        
+        asl is a resource-inexpensive way to create timelapses from your screen. It takes screenshots at intervals (`asl`) and uses ffmpeg to convert them into a video (`asl-timelapse`), optionally archiving them
+        
+        ### Installation
+        
+        Just `pip install asl_screenlapse`
+        
+        ### How to use
+        
+        Daemonization is flexible. Run `asl` at bootup, with DE Autostart, WM config, systemd service, etc. It will take screenshots in `$HOME/asl-scrots` at intervals, but if more than a certain time passes between them (i.e. different boot), it will create a new numbered folder. 
+        
+        Whenever you want, run `asl-timelapse` to create timelapses in `$HOME/asl-summaries`, named according to folder number and in the WEBM format.
+        
+        ### Example output
+        
+        ![example](asl-example.gif)
+        
+        See also `asl-example.webm`
+        
+        ### Quirks
+        
+        + The non-`pip` dependency of `ffmpeg`, with no way to specify it in `setup.py`
+        + The usage of `os.system()`
+        + The `ffmpeg` command being written for Linux, so it doesn't work on Windows
+        
+        
+        ### Todo
+        
+         - [X] Install scripts
+         - [ ] Configuration in .ini format
+         - [X] Make it available on the PyPI
+         - [ ] Cross platform - using ffmpeg bindings rather than `os.system()`
+         - [ ] AUR Package
+         - [ ] Automatic archive zipping 
+         - [ ] Timelapse from archive
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Operating System :: POSIX :: Linux
+Description-Content-Type: text/markdown

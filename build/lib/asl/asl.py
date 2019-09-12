@@ -27,6 +27,7 @@ if not os.path.isdir(FOLDER):
 
 def take_screenshot(f):
     if sys.platform == "win32":
+        print("hi")
         hdesktop = win32gui.GetDesktopWindow()
         
         w = win32api.GetSystemMetrics(win32con.SM_CXVIRTUALSCREEN)
@@ -89,6 +90,8 @@ def latest_file(d):
 def main():
     if latest_folder() == "":
         os.mkdir(FOLDER+"asl-0000")
+    
+    print(sys.platform)
     while True:
         timestamp = int(time.time())
         folders_exist = not (latest_file(FOLDER+latest_folder()) == "")
