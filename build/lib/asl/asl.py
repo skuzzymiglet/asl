@@ -6,11 +6,7 @@ import os
 import sys
 
 if sys.platform == "win32":
-   import win32gui
-   import win32ui
-   import win32con
-   import win32api
-   from ctypes import windll
+   import pyautogui
 
    user32 = windll.user32
    user32.SetProcessDPIAware()
@@ -27,28 +23,7 @@ if not os.path.isdir(FOLDER):
 
 def take_screenshot(f):
     if sys.platform == "win32":
-        print("hi")
-        hdesktop = win32gui.GetDesktopWindow()
-        
-        w = win32api.GetSystemMetrics(win32con.SM_CXVIRTUALSCREEN)
-        h =  win32api.GetSystemMetrics(win32con.SM_CYVIRTUALSCREEN)
-        l =  win32api.GetSystemMetrics(win32con.SM_XVIRTUALSCREEN)
-        t =  win32api.GetSystemMetrics(win32con.SM_YVIRTUALSCREEN)
-
-        desktop_dc = win32gui.GetWindowDC(hdesktop)
-        img_dc = win32ui.CreateDCFromHandle(desktop_dc)
-        mem_dc = img_dc.CreateCompatibleDC()
-
-        screenshot = win32ui.CreateBitmap()
-        screenshot.CreateCompatibleBitmap(img_dc, w, h)
-        mem_dc.SelectObject(screenshot)
-
-        mem_dc.BitBlt((0,0), (w,h), img_dc, (l,t), win32con.SRCCOPY)
-
-        screenshot.SaveBitmapFile(mem_dc, f)
-        mem_dc.DeleteDC()
-        win32gui.DeleteObject(screenshot.GetHandle())
-
+        pyautogui.screenshot(f) 
     else:
         img = pyscreenshot.grab()
         img.save(f)
@@ -90,8 +65,6 @@ def latest_file(d):
 def main():
     if latest_folder() == "":
         os.mkdir(FOLDER+"asl-0000")
-    
-    print(sys.platform)
     while True:
         timestamp = int(time.time())
         folders_exist = not (latest_file(FOLDER+latest_folder()) == "")
