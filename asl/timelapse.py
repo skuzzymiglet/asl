@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import shutil
 import tempfile
 from PIL import Image
@@ -18,7 +19,10 @@ def dup_folder(path):
         for n in range(5):
             target = path+i
             f = tmp.name+"/"+i.split(".")[0]+str(n)+"."+i.split(".")[1]
-            os.symlink(target, f)
+            if sys.platform == "win32":
+                shutil.copy(target, f) #  Copy files because symlink doesn't work
+            else:
+                os.symlink(target, f)
     return tmp
 
 
