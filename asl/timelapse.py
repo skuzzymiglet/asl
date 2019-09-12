@@ -17,8 +17,8 @@ def dup_folder(path):
     for i in os.listdir(path):
         for n in range(5):
             target = path+i
-            file = tmp.name+"/"+i.split(".")[0]+str(n)+"."+i.split(".")[1]
-            os.symlink(target, file)
+            f = tmp.name+"/"+i.split(".")[0]+str(n)+"."+i.split(".")[1]
+            os.symlink(target, f)
     return tmp
 
 
