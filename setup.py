@@ -1,11 +1,11 @@
 import setuptools
 import os
 
-long_description = open(os.path.join(os.path.dirname(__file__), "README.md"), "r").read()
+long_description = open(os.path.join(os.path.dirname(__file__), "README.rst"), "r").read()
 
 setuptools.setup(
     name="asl-screenlapse",
-    version="0.1.1",
+    version="0.1.2.1",
     author="skuzzymiglet",
     author_email="skuzzymiglet@gmail.com",
     description="a resource-inexpensive way to create timelapses from your screen",
@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/skuzzymiglet/asl",
     packages=["asl"],
-    setup_requires=["pyscreenshot"],
+    setup_requires=["pyscreenshot", "pyautogui"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
