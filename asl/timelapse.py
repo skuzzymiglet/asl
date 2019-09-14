@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 
 import os
 import sys
@@ -11,7 +11,6 @@ SUMMARIES = os.path.expanduser("~")+"/asl-summaries"
 ARCHIVE = ""
 FRAMERATE = 6
 SMOOTH = True
-
 
 def dup_folder(path):
     tmp = tempfile.TemporaryDirectory()
@@ -26,25 +25,29 @@ def dup_folder(path):
     return tmp
 
 
+def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9", bitrate="2M", out_fmt="webm", threads=2):
+    cmd_format = "ffmpeg -y -threads {} -r {} -pattern_type glob -i '{}*.{}' -c:v {} -b:v {} -auto-alt-ref 0 -s {}x{} -an -deinterlace {}.{}"
+    cmd = cmd_format.format(threads, framerate, d, img_fmt, codec, bitrate, str(res[0]), str(res[1]), out, out_fmt)
+    print(cmd)
+    exit_code = os.system(cmd)
+    if not exit_code == 0:
+       raise OSError(exit_code, "ffmpeg error")
+
 def folder_max_res(folder):
     res = []
     for f in os.listdir(folder):
         res.append(Image.open(folder+f).size)
     return max(res)
 
-
 def main():
     # All folders are timelapsed except the last (so numbering doesn't reset)
     for sub_folder in sorted(os.listdir(FOLDER))[0:-1]:
         res = folder_max_res(FOLDER+"/"+sub_folder+"/")
-        cmd_format = "ffmpeg -y -threads 2 -r {} -pattern_type glob -i '{}*.jpg' -c:v libvpx-vp9 -b:v 2M -auto-alt-ref 0 -s {}x{} -an  -deinterlace {}"
         if SMOOTH:
             tmp = dup_folder(FOLDER+"/"+sub_folder+"/")
-            cmd = cmd_format.format(30, tmp.name+"/", res[0], res[1], SUMMARIES+"/"+sub_folder+".webm")
+            timelapse(30, tmp.name+"/", "jpg", res, SUMMARIES+"/"+sub_folder)
         else:
-            cmd = cmd_format.format(FRAMERATE, FOLDER+"/"+sub_folder+"/", res[0], res[1], SUMMARIES+"/"+sub_folder+".webm")
-        print(cmd)
-        os.system(cmd)
+            timelapse(FRAMERATE, FOLDER+"/"+sub_folder+"/", "jpg", res, SUMMARIES+"/"+sub_folder)
         if ARCHIVE == "":
             shutil.rmtree(FOLDER+"/"+sub_folder+"/")
             continue
