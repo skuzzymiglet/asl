@@ -4,6 +4,7 @@ import os
 import sys
 import shutil
 import tempfile
+import ffmpeg
 from PIL import Image
 
 FOLDER = os.path.expanduser("~")+"/asl-scrots"
@@ -12,6 +13,7 @@ ARCHIVE = ""
 FRAMERATE = 6
 SMOOTH = True
 
+
 def dup_folder(path):
     tmp = tempfile.TemporaryDirectory()
     for i in os.listdir(path):
@@ -19,25 +21,29 @@ def dup_folder(path):
             target = path+i
             f = tmp.name+"/"+i.split(".")[0]+str(n)+"."+i.split(".")[1]
             if sys.platform == "win32":
-                shutil.copy(target, f) #  Copy files because symlink doesn't work
+                shutil.copy(target, f)  # Copy files because symlink doesn't work
             else:
                 os.symlink(target, f)
     return tmp
 
 
-def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9", bitrate="2M", out_fmt="webm", threads=2):
-    cmd_format = "ffmpeg -y -threads {} -r {} -pattern_type glob -i '{}*.{}' -c:v {} -b:v {} -auto-alt-ref 0 -s {}x{} -an -deinterlace {}.{}"
-    cmd = cmd_format.format(threads, framerate, d, img_fmt, codec, bitrate, str(res[0]), str(res[1]), out, out_fmt)
-    print(cmd)
-    exit_code = os.system(cmd)
-    if not exit_code == 0:
-       raise OSError(exit_code, "ffmpeg error")
+def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9",
+              bitrate=2000, out_fmt="webm", threads=2):
+    (ffmpeg
+        .input(d+"screenshot-*."+img_fmt, pattern_type="glob")
+        .output("{}.{}".format(out, out_fmt),
+                video_bitrate=bitrate, s="{}x{}".format(res[0], res[1]),
+                r=framerate, **{"c:v": codec, "auto-alt-ref": 0})
+        .overwrite_output()
+        .run())
+
 
 def folder_max_res(folder):
     res = []
     for f in os.listdir(folder):
         res.append(Image.open(folder+f).size)
     return max(res)
+
 
 def main():
     # All folders are timelapsed except the last (so numbering doesn't reset)
