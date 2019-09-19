@@ -13,20 +13,6 @@ ARCHIVE = ""
 FRAMERATE = 6
 SMOOTH = True
 
-
-def dup_folder(path):
-    tmp = tempfile.TemporaryDirectory()
-    for i in os.listdir(path):
-        for n in range(5):
-            target = path+i
-            f = tmp.name+"/"+i.split(".")[0]+str(n)+"."+i.split(".")[1]
-            if sys.platform == "win32":
-                shutil.copy(target, f)  # Copy files because symlink doesn't work
-            else:
-                os.symlink(target, f)
-    return tmp
-
-
 def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9", crf=10,
               bitrate=2500000, out_fmt="webm", threads=2):
     (ffmpeg
