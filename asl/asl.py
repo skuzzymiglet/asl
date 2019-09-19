@@ -24,7 +24,7 @@ if not os.path.isdir(FOLDER):
 
 def take_screenshot(f):
     if sys.platform == "win32":
-        pyautogui.screenshot(f) 
+        pyautogui.screenshot(f)
     else:
         img = pyscreenshot.grab()
         img.save(f)

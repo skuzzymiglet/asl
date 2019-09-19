@@ -27,13 +27,13 @@ def dup_folder(path):
     return tmp
 
 
-def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9",
-              bitrate=2000, out_fmt="webm", threads=2):
+def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9", crf=10,
+              bitrate=2500000, out_fmt="webm", threads=2):
     (ffmpeg
         .input(d+"screenshot-*."+img_fmt, pattern_type="glob")
         .output("{}.{}".format(out, out_fmt),
                 video_bitrate=bitrate, s="{}x{}".format(res[0], res[1]),
-                r=framerate, **{"c:v": codec, "auto-alt-ref": 0})
+                r=framerate, crf=crf, **{"c:v": codec, "auto-alt-ref": 0})
         .overwrite_output()
         .run())
 
@@ -50,8 +50,7 @@ def main():
     for sub_folder in sorted(os.listdir(FOLDER))[0:-1]:
         res = folder_max_res(FOLDER+"/"+sub_folder+"/")
         if SMOOTH:
-            tmp = dup_folder(FOLDER+"/"+sub_folder+"/")
-            timelapse(30, tmp.name+"/", "jpg", res, SUMMARIES+"/"+sub_folder)
+             timelapse(FRAMERATE, FOLDER+"/"+sub_folder+"/", "jpg", res, SUMMARIES+"/"+sub_folder, crf=4)
         else:
             timelapse(FRAMERATE, FOLDER+"/"+sub_folder+"/", "jpg", res, SUMMARIES+"/"+sub_folder)
         if ARCHIVE == "":
