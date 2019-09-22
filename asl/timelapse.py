@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
+# ! /usr/bin/env python3
 
 import os
-import sys
 import shutil
-import tempfile
+import ffmpeg
 from PIL import Image
 
 FOLDER = os.path.expanduser("~")+"/asl-scrots"
@@ -11,19 +10,20 @@ SUMMARIES = os.path.expanduser("~")+"/asl-summaries"
 ARCHIVE = ""
 FRAMERATE = 6
 SMOOTH = True
+DRY = False
 
 
-def dup_folder(path):
-    tmp = tempfile.TemporaryDirectory()
-    for i in os.listdir(path):
-        for n in range(5):
-            target = path+i
-            f = tmp.name+"/"+i.split(".")[0]+str(n)+"."+i.split(".")[1]
-            if sys.platform == "win32":
-                shutil.copy(target, f) #  Copy files because symlink doesn't work
-            else:
-                os.symlink(target, f)
-    return tmp
+def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9", crf=10,
+              bitrate=2500000, out_fmt="webm", threads=2):
+    o = (ffmpeg
+         .input(d+"screenshot-%010d."+img_fmt, pattern_type="sequence")
+         .output("{}.{}".format(out, out_fmt),
+                 video_bitrate=bitrate, s="{}x{}".format(res[0], res[1]),
+                 r=framerate, crf=crf, **{"c:v": codec, "auto-alt-ref": 0})
+         .overwrite_output())
+    print(' '.join(o.compile()))
+    if not DRY:
+        o.run()
 
 
 def folder_max_res(folder):
@@ -37,14 +37,12 @@ def main():
     # All folders are timelapsed except the last (so numbering doesn't reset)
     for sub_folder in sorted(os.listdir(FOLDER))[0:-1]:
         res = folder_max_res(FOLDER+"/"+sub_folder+"/")
-        cmd_format = "ffmpeg -y -threads 2 -r {} -pattern_type glob -i '{}*.jpg' -c:v libvpx-vp9 -b:v 2M -auto-alt-ref 0 -s {}x{} -an  -deinterlace {}"
         if SMOOTH:
-            tmp = dup_folder(FOLDER+"/"+sub_folder+"/")
-            cmd = cmd_format.format(30, tmp.name+"/", res[0], res[1], SUMMARIES+"/"+sub_folder+".webm")
+            timelapse(FRAMERATE, FOLDER+"/"+sub_folder+"/", "jpg", res,
+                      SUMMARIES+"/"+sub_folder, crf=4)
         else:
-            cmd = cmd_format.format(FRAMERATE, FOLDER+"/"+sub_folder+"/", res[0], res[1], SUMMARIES+"/"+sub_folder+".webm")
-        print(cmd)
-        os.system(cmd)
+            timelapse(FRAMERATE, FOLDER+"/"+sub_folder+"/", "jpg", res,
+                      SUMMARIES+"/"+sub_folder)
         if ARCHIVE == "":
             shutil.rmtree(FOLDER+"/"+sub_folder+"/")
             continue
@@ -53,6 +51,3 @@ def main():
             print("Moved", sub_folder, "to", ARCHIVE)
         except shutil.Error:
             print("Folder Exists")
-        if SMOOTH:
-            tmp.cleanup()
-        print("="*len(cmd))
