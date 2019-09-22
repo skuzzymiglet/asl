@@ -1,9 +1,7 @@
 # ! /usr/bin/env python3
 
 import os
-import sys
 import shutil
-import tempfile
 import ffmpeg
 from PIL import Image
 
@@ -53,5 +51,3 @@ def main():
             print("Moved", sub_folder, "to", ARCHIVE)
         except shutil.Error:
             print("Folder Exists")
-        if SMOOTH:
-            tmp.cleanup()
