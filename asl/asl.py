@@ -3,6 +3,7 @@
 import pyscreenshot
 import time
 import os
+import os.path
 import sys
 
 if sys.platform == "win32":
@@ -20,6 +21,10 @@ FOLDER = HOME+"/asl-scrots/"
 
 if not os.path.isdir(FOLDER):
     os.makedirs(FOLDER)
+
+
+def last_modified(f):
+    return int(os.path.getmtime(f))
 
 
 def take_screenshot(f):
@@ -66,13 +71,15 @@ def latest_file(d):
 def main():
     if latest_folder() == "":
         os.mkdir(FOLDER+"asl-0000")
+    i = 0
     while True:
         timestamp = int(time.time())
         folders_exist = not (latest_file(FOLDER+latest_folder()) == "")
-        if folders_exist and (timestamp - int(latest_file(FOLDER+latest_folder()).split("-")[1].split(".")[0])) >= NEWFOLDER_THRESHOLD:
+        if folders_exist and (timestamp - last_modified(FOLDER+latest_folder()+"/"+latest_file(FOLDER+latest_folder()))) >= NEWFOLDER_THRESHOLD:
             new_folder = FOLDER+get_new_subfolder()
             os.mkdir(new_folder)
-        name = FOLDER+latest_folder()+"/screenshot-"+str(timestamp)+".jpg"
+        name = FOLDER+latest_folder()+"/screenshot-"+str(i).zfill(10)+".jpg"
         print(name)
         take_screenshot(name)
+        i += 1
         time.sleep(INTERVAL)

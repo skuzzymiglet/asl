@@ -12,16 +12,19 @@ SUMMARIES = os.path.expanduser("~")+"/asl-summaries"
 ARCHIVE = ""
 FRAMERATE = 6
 SMOOTH = True
+DRY = False
 
 def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9", crf=10,
               bitrate=2500000, out_fmt="webm", threads=2):
-    (ffmpeg
-        .input(d+"screenshot-*."+img_fmt, pattern_type="glob")
+    o = (ffmpeg
+        .input(d+"screenshot-%010d."+img_fmt, pattern_type="sequence")
         .output("{}.{}".format(out, out_fmt),
-                video_bitrate=bitrate, s="{}x{}".format(res[0], res[1]),
+                video_bitrate=bitrate, s="{}x{}".format(res[0], res[1])),
                 r=framerate, crf=crf, **{"c:v": codec, "auto-alt-ref": 0})
-        .overwrite_output()
-        .run())
+        .overwrite_output())
+    print(' '.join(o.compile()))
+    if not DRY:
+        o.run()
 
 
 def folder_max_res(folder):
@@ -36,7 +39,7 @@ def main():
     for sub_folder in sorted(os.listdir(FOLDER))[0:-1]:
         res = folder_max_res(FOLDER+"/"+sub_folder+"/")
         if SMOOTH:
-             timelapse(FRAMERATE, FOLDER+"/"+sub_folder+"/", "jpg", res, SUMMARIES+"/"+sub_folder, crf=4)
+            timelapse(FRAMERATE, FOLDER+"/"+sub_folder+"/", "jpg", res, SUMMARIES+"/"+sub_folder, crf=4)
         else:
             timelapse(FRAMERATE, FOLDER+"/"+sub_folder+"/", "jpg", res, SUMMARIES+"/"+sub_folder)
         if ARCHIVE == "":
