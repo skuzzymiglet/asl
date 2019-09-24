@@ -18,8 +18,7 @@ def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9", crf=10,
     o = (ffmpeg
          .input(d+"screenshot-%010d."+img_fmt, pattern_type="sequence")
          .output("{}.{}".format(out, out_fmt),
-                 video_bitrate=bitrate, s="{}x{}".format(res[0], res[1]),
-                 r=framerate, crf=crf, **{"c:v": codec, "auto-alt-ref": 0})
+                 video_bitrate=bitrate, s="{}x{}".format(res[0], res[1]), r=framerate, crf=crf, **{"c:v": codec, "auto-alt-ref": 0})
          .overwrite_output())
     print(' '.join(o.compile()))
     if not DRY:
