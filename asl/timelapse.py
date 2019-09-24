@@ -1,4 +1,4 @@
-# ! /usr/bin/env python3
+#! /usr/bin/env python3
 
 import os
 import shutil
@@ -13,13 +13,17 @@ SMOOTH = True
 DRY = False
 
 
+def start_number(d):
+    return int(os.listdir(d)[0].split("-")[1].split(".")[0])
+
+
 def timelapse(framerate, d, img_fmt, res, out, codec="libvpx-vp9", crf=10,
               bitrate=2500000, out_fmt="webm", threads=2):
     o = (ffmpeg
-         .input(d+"screenshot-%010d."+img_fmt, pattern_type="sequence")
-         .output("{}.{}".format(out, out_fmt),
-                 video_bitrate=bitrate, s="{}x{}".format(res[0], res[1]), r=framerate, crf=crf, **{"c:v": codec, "auto-alt-ref": 0})
-         .overwrite_output())
+        .input(d+"screenshot-%010d."+img_fmt, pattern_type="sequence", start_number=start_number(d))
+        .output("{}.{}".format(out, out_fmt),
+               video_bitrate=bitrate, s="{}x{}".format(res[0], res[1]), r=framerate, crf=crf, **{"c:v": codec, "auto-alt-ref": 0})
+       .overwrite_output())
     print(' '.join(o.compile()))
     if not DRY:
         o.run()
