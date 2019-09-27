@@ -1,2 +1,4 @@
 pyscreenshot
 pillow
+pyautogui
+ffmpeg-python
