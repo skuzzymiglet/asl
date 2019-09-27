@@ -39,21 +39,13 @@ Example output
 
 See also ``asl-example.webm``
 
-Quirks
-~~~~~~
-
--  The non-\ ``pip`` dependency of ``ffmpeg``, with no way to specify it
-   in ``setup.py``
--  The usage of ``os.system()``
--  The ``ffmpeg`` command uses globbing, so it doesn’t work on Windows
-
 Todo
 ~~~~
 
 -  ☒ Install scripts
 -  ☐ Configuration in .ini format
 -  ☒ Make it available on the PyPI
--  ☐ Cross platform - using ffmpeg bindings rather than ``os.system()``
+-  ☒ Cross platform - using ffmpeg bindings rather than ``os.system()``
 -  ☐ AUR Package
 -  ☐ Automatic archive zipping
 -  ☐ Timelapse from archive
