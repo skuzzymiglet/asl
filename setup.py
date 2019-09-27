@@ -1,7 +1,7 @@
 import setuptools
 import os
 
-long_description = open(os.path.join(os.path.dirname(__file__), "README.rst"), "r").read()
+long_description = open(os.path.join(os.path.dirname(__file__), "README.rst"), "r", encoding="utf-8").read()
 
 setuptools.setup(
     name="asl-screenlapse",
