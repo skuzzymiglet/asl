@@ -5,7 +5,7 @@ long_description = open(os.path.join(os.path.dirname(__file__), "README.rst"), "
 
 setuptools.setup(
     name="asl-screenlapse",
-    version="0.1.2.1",
+    version="0.1.3",
     author="skuzzymiglet",
     author_email="skuzzymiglet@gmail.com",
     description="a resource-inexpensive way to create timelapses from your screen",
