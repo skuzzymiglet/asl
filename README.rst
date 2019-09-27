@@ -45,8 +45,7 @@ Quirks
 -  The non-\ ``pip`` dependency of ``ffmpeg``, with no way to specify it
    in ``setup.py``
 -  The usage of ``os.system()``
--  The ``ffmpeg`` command being written for Linux, so it doesn’t work on
-   Windows
+-  The ``ffmpeg`` command uses globbing, so it doesn’t work on Windows
 
 Todo
 ~~~~
