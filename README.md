@@ -21,19 +21,12 @@ Whenever you want, run `asl-timelapse` to create timelapses in `$HOME/asl-summar
 
 See also `asl-example.webm`
 
-### Quirks
-
-+ The non-`pip` dependency of `ffmpeg`, with no way to specify it in `setup.py`
-+ The usage of `os.system()`
-+ The `ffmpeg` command uses globbing, so it doesn't work on Windows
-
-
 ### Todo
 
  - [X] Install scripts
  - [ ] Configuration in .ini format
  - [X] Make it available on the PyPI
- - [ ] Cross platform - using ffmpeg bindings rather than `os.system()`
+ - [X] Cross platform - using ffmpeg bindings rather than `os.system()`
  - [ ] AUR Package
  - [ ] Automatic archive zipping 
  - [ ] Timelapse from archive
